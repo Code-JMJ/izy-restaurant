@@ -26,4 +26,5 @@ class UserRepository extends BaseRepository
     public function deleteGroupByPartner($partner_id){
         return User::where('partner_id', $partner_id)->delete();
     }
+
 }

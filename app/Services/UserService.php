@@ -23,8 +23,6 @@ class UserService
     public function storeUser($data)
     {
         $data['partner_id'] = Auth::user()->partner_id;
-        // $user = new User($data);
-        // $user = $this->userRepository->save($user);
         $user = $this->userRepository->store($data);
 
         return $user;
@@ -40,7 +38,6 @@ class UserService
     {
         $status = $this->userRepository->update($user, $data);
         return $status?true:false;
-
     }
 
     public function updateStatus(User $user, $data)
@@ -57,6 +54,11 @@ class UserService
         }
 
         return false;
+    }
+
+    public function syncRole(User $user, $roles){
+        $user->syncRoles($roles);
+        return true;
     }
 
 }

@@ -3,19 +3,19 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
-class PermissionRepository extends BaseRepository
+class RoleRepository extends BaseRepository
 {
-    public function __construct(Permission $permission)
+
+    public function __construct(Role $role)
     {
-        parent::__construct($permission);
+        parent::__construct($role);
     }
 
     public function queryAll(){
-        return Permission::where('partner_id', Auth::user()->partner_id);
+        return Role::where('partner_id', Auth::user()->partner_id);
     }
 
     public function allDatatable()
