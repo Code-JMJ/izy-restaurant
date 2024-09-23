@@ -2,10 +2,8 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\PermissionGroup;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-use Yajra\DataTables\Facades\DataTables;
 
 class PermissionRepository extends BaseRepository
 {
@@ -15,13 +13,12 @@ class PermissionRepository extends BaseRepository
     }
 
     public function queryAll(){
-        return Permission::where('partner_id', Auth::user()->partner_id);
+        return PermissionGroup::with('permissions');
     }
 
-    public function allDatatable()
+    public function getAll()
     {
-        $query = $this->queryAll();
-        return DataTables::eloquent($query)->toJson();
+        return $this->queryAll()->get();
     }
 
 }

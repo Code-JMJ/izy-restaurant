@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Http\Resources\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -40,9 +41,10 @@ class UserController extends Controller
                 'message'=>__('http_messages.not_found')
             ], 404);
         }
+        $userFormat = new UserResource($user);
         return response()->json([
             'status'=>true,
-            'data'=>$user
+            'data' => $userFormat
         ], 200);
     }
 

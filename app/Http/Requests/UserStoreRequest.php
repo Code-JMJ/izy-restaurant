@@ -26,6 +26,7 @@ class UserStoreRequest extends FormRequest
             'name' => 'required|min:3',
             'email' => 'required|unique:users,email',
             'password' => [Password::min(6)],
+            'role' => 'required|string|exists:roles,name'
         ];
     }
 }

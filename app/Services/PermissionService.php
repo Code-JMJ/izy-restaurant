@@ -14,14 +14,34 @@ class PermissionService
         $this->permissionRepository = $permissionRepository;
     }
 
-    public function allDatatable()
+    public function getAll()
     {
-        return $this->permissionRepository->allDatatable();
+        $permissionGoups = $this->permissionRepository->getAll();
+        $permissionsFormat = [];
+        foreach ($permissionGoups as $group) {
+            $permissions = [];
+
+            foreach ($group->permissions as $permission) {
+                array_push($permissions, [
+                    'id' => $permission->id,
+                    'name' => $permission->name,
+                    'text' => __('permissions.'.$permission->description_key),
+                ]);
+            }
+
+            array_push($permissionsFormat, [
+                'group_id' => $group->id,
+                'group_name' => __('permissions.'.$group->description_key),
+                'permissions' => $permissions
+            ]);
+        }
+
+        return $permissionsFormat;
     }
 
     public function createPermission($data)
     {
-        $data['partner_id'] = Auth::user()->partner_id;
+        $data['guard_name'] = 'web';
         $permission = $this->permissionRepository->store($data);
 
         return $permission;

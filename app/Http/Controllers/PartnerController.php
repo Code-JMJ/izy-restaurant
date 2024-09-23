@@ -25,6 +25,13 @@ class PartnerController extends Controller
     public function store(PartnerStoreRequest $request)
     {
         $partner = $this->partnerService->storePartner($request);
+        if(!$partner){
+            return response()->json([
+                'status'=>false,
+                'message'=>__('http_messages.failed_store')
+            ], 404);
+        }
+
         return response()->json([
             'status'=>true,
             'message'=> __('http_messages.success_store'),
@@ -41,7 +48,11 @@ class PartnerController extends Controller
                 'message'=>__('http_messages.not_found')
             ], 404);
         }
-        return new PartnerResource($partner);
+        $partnerFormat = new PartnerResource($partner);
+        return response()->json([
+            'status'=>true,
+            'data' => $partnerFormat
+        ], 200);
     }
 
     public function update(PartnerUpdateRequest $request, string $id)
@@ -55,8 +66,15 @@ class PartnerController extends Controller
         }
 
         $isUpdated = $this->partnerService->updatePartner($partner, $request);
+        if(!$isUpdated){
+            return response()->json([
+                'status'=>false,
+                'message'=>__('http_messages.failed_update')
+            ], 404);
+        }
+
         return response()->json([
-            'status'=>$isUpdated,
+            'status'=>true,
             'message'=>__('http_messages.success_update')
         ], 200);
     }

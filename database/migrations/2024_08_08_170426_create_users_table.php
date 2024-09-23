@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('partner_id')->nullable();
             $table->string('profile_photo_path')->nullable();
             $table->boolean('partner_main_user')->default(0)->comment('1:si 0:no');
+            $table->string('locale', 10)->default('es');
             $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->rememberToken();
             $table->timestamps();

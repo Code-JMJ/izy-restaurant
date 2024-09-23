@@ -32,6 +32,9 @@ class BaseRepository
         if (!empty($relations)) {
             $query = $query->with($relations);
         }
+        if(!Auth::user()->hasRole('Super Admin')){
+            $query = $query->where('partner_id', Auth::user()->partner_id);
+        }
 
         return $query->find($id);
     }

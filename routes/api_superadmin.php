@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([
     'auth:sanctum',
-    'role:Super Admin'
+    'role:Super Admin',
+    'setlocale'
 ])->group(function () {
 
     Route::put('partners/change-status', [PartnerController::class, 'updateStatus']);

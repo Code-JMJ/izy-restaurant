@@ -20,11 +20,17 @@ class UserRepository extends BaseRepository
     public function allDatatable()
     {
         $query = $this->queryAll();
+        // $query = User::factory()->count(1000)->make();
         return DataTables::eloquent($query)->toJson();
     }
 
     public function deleteGroupByPartner($partner_id){
         return User::where('partner_id', $partner_id)->delete();
+    }
+
+    public function syncRoles(User $user, $roles){
+        $user->syncRoles($roles);
+        return true;
     }
 
 }

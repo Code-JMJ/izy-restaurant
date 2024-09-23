@@ -24,13 +24,13 @@ class UserService
     {
         $data['partner_id'] = Auth::user()->partner_id;
         $user = $this->userRepository->store($data);
-
+        $this->syncRoles($user, [$data['role']]);
         return $user;
     }
 
     public function getUser($id)
     {
-        $user = $this->userRepository->get($id);
+        $user = $this->userRepository->get($id, ['roles:id,name', 'partner_branch:id,name']);
         return $user;
     }
 
@@ -49,15 +49,13 @@ class UserService
     public function destroy(User $user)
     {
         if($user && $user->partner_id === Auth::user()->partner_id){
-            $this->userRepository->delete($user);
-            return true;
+            return $this->userRepository->delete($user);
         }
-
         return false;
     }
 
-    public function syncRole(User $user, $roles){
-        $user->syncRoles($roles);
+    public function syncRoles(User $user, $roles){
+        $this->userRepository->syncRoles($user, $roles);
         return true;
     }
 

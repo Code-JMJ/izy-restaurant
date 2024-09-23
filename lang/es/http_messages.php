@@ -12,4 +12,9 @@ return [
     'success_update_status' => 'Estado actualizado correctamente',
     'success_destroy' => 'Registro eliminado correctamente',
 
+    'failed_store' => 'Error al guardar el registro',
+    'failed_update' => 'Error al actualizar el registro',
+    'failed_update_status' => 'Error al cambiar el estado del registro',
+    'failed_destroy' => 'Error al eliminar el registro',
+
 ];

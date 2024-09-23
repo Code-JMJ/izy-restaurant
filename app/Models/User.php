@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Partner::class);
     }
+
+    public function partner_branch():BelongsTo
+    {
+        return $this->belongsTo(PartnerBranch::class);
+    }
 }
